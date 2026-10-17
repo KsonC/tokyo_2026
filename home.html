@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOKYO|Guide & Itinerary</title>
+    <title>My Travel Dashboard</title>
     <style>
         :root {
             --primary-color: #0969da;
@@ -11,6 +11,7 @@
             --card-bg: #ffffff;
             --text-color: #24292f;
             --border-color: #d0d7de;
+            --active-tab: #0969da;
         }
 
         body {
@@ -19,7 +20,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
@@ -29,52 +30,95 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-        }
-
-        h1 { margin: 0 0 10px 0; color: var(--primary-color); }
-        .dates { font-weight: bold; color: #57606a; }
-
-        .day-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
         }
 
-        .day-title {
-            margin-top: 0;
+        h1 { margin: 0 0 5px 0; color: var(--primary-color); font-size: 1.5rem; }
+        .subtitle { color: #57606a; margin: 0; font-size: 0.9rem; }
+
+        /* --- TABS SYSTEM --- */
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto; /* Allows horizontal scrolling on mobile */
             padding-bottom: 10px;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tab-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .tab-btn.active {
+            background-color: var(--active-tab);
+            color: #ffffff;
+            border-color: var(--active-tab);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* --- CONTENT PANELS --- */
+        .tab-panel {
+            display: none; /* Hidden by default */
+        }
+
+        .tab-panel.active {
+            display: block; /* Show active panel */
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .card-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #1f2328;
             border-bottom: 2px solid var(--primary-color);
-        }
-
-        .activity {
-            margin-bottom: 20px;
-        }
-
-        .activity-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 5px;
+            padding-bottom: 6px;
         }
 
         .links {
-            margin: 8px 0;
+            margin: 12px 0;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .btn {
             display: inline-block;
-            padding: 6px 12px;
-            font-size: 0.85em;
+            padding: 7px 12px;
+            font-size: 0.85rem;
             text-decoration: none;
             border-radius: 6px;
             font-weight: 500;
@@ -88,12 +132,12 @@
 
         .btn-map {
             background-color: #2da44e;
-            color: white;
+            color: #ffffff;
         }
 
         .map-container {
             position: relative;
-            padding-bottom: 45%; /* Aspect ratio for embedded map */
+            padding-bottom: 50%; /* Aspect ratio */
             height: 0;
             overflow: hidden;
             border-radius: 6px;
@@ -118,50 +162,95 @@
         <h1>✈️ Travel Guide: Tokyo 2026</h1>
         <p>Itinerary. Sightseeing, Food</p>
     </header>
+<!-- CLICKABLE DESTINATION TABS -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab(event, 'shibuya')">📍 Shibuya</button>
+        <button class="tab-btn" onclick="openTab(event, 'ueno')">📍 Ueno</button>
+        <button class="tab-btn" onclick="openTab(event, 'asakusa')">📍 Asakusa</button>
+        <button class="tab-btn" onclick="openTab(event, 'fuji')">🗻 Mt. Fuji / Lake</button>
+    </div>
 
-    <!-- DAY 1 -->
-    <div class="day-card">
-        <h2 class="day-title">Day 1: Arrival & City Views</h2>
-        
-        <div class="activity">
-            <div class="activity-title">1. Shibuya Sky</div>
-            <p>Observation deck offering 360-degree views of Tokyo and Shibuya Crossing.</p>
+    <!-- TAB 1: SHIBUYA -->
+    <div id="shibuya" class="tab-panel active">
+        <div class="card">
+            <h2 class="card-title">1. Shibuya Sky</h2>
+            <p>360-degree open-air observation deck overlooking the Shibuya Crossing.</p>
             <div class="links">
-                <a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" class="btn btn-info">🌐 Official Website</a>
-                <a href="https://maps.google.com/?q=Shibuya+Sky" target="_blank" class="btn btn-map">📍 Open in Google Maps App</a>
+                <a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" class="btn btn-info">🌐 Website</a>
+                <a href="https://maps.google.com/?q=Shibuya+Sky" target="_blank" class="btn btn-map">📍 Open Google Maps App</a>
             </div>
-            <!-- Embedded Google Map -->
             <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747230491039!2d139.7001!3d35.6580!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b58c8a14b51%3A0x628004f1efb4334f!2sSHIBUYA%20SKY!5e0!3m2!1sen!2s!4v1600000000000" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747230491039!2d139.7001!3d35.6580!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b58c8a14b51%3A0x628004f1efb4334f!2sSHIBUYA%20SKY!5e0!3m2!1sen!2s!4v1600000000000" loading="lazy"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- DAY 2 -->
-    <div class="day-card">
-        <h2 class="day-title">Day 2: Cultural Exploration</h2>
-        
-        <div class="activity">
-            <div class="activity-title">1. Senso-ji Temple</div>
-            <p>Tokyo's oldest Buddhist temple located in Asakusa.</p>
+    <!-- TAB 2: UENO -->
+    <div id="ueno" class="tab-panel">
+        <div class="card">
+            <h2 class="card-title">1. Ueno Park & Museums</h2>
+            <p>Spacious public park featuring museums, temples, and tranquil lotus ponds.</p>
             <div class="links">
-                <a href="https://www.senso-ji.jp/english/" target="_blank" class="btn btn-info">🌐 Official Website</a>
-                <a href="https://maps.google.com/?q=Senso-ji+Temple" target="_blank" class="btn btn-map">📍 Open in Google Maps App</a>
+                <a href="https://www.kensetsu.metro.tokyo.lg.jp/jimusho/toubuk/ueno/index.html" target="_blank" class="btn btn-info">🌐 Website</a>
+                <a href="https://maps.google.com/?q=Ueno+Park" target="_blank" class="btn btn-map">📍 Open Google Maps App</a>
             </div>
             <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.9922285743455!2d139.7944183!3d35.7147651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ec1a4463df1%3A0x6c08e8d44e7d0967!2sSens%C5%8D-ji!5e0!3m2!1sen!2s!4v1600000000000" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.527633215907!2d139.7719653!3d35.7140723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188e9c3722a4d3%3A0x1d3745a557b6f3c0!2sUeno%20Park!5e0!3m2!1sen!2s!4v1600000000000" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: ASAKUSA -->
+    <div id="asakusa" class="tab-panel">
+        <div class="card">
+            <h2 class="card-title">1. Senso-ji Temple</h2>
+            <p>Tokyo's oldest and most famous Buddhist temple with Nakamise shopping street.</p>
+            <div class="links">
+                <a href="https://www.senso-ji.jp/english/" target="_blank" class="btn btn-info">🌐 Website</a>
+                <a href="https://maps.google.com/?q=Senso-ji" target="_blank" class="btn btn-map">📍 Open Google Maps App</a>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.9922285743455!2d139.7944183!3d35.7147651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ec1a4463df1%3A0x6c08e8d44e7d0967!2sSens%C5%8D-ji!5e0!3m2!1sen!2s!4v1600000000000" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: MT. FUJI -->
+    <div id="fuji" class="tab-panel">
+        <div class="card">
+            <h2 class="card-title">1. Lake Kawaguchiko</h2>
+            <p>Scenic lake offering dramatic views of Mount Fuji, especially during sunrise/sunset.</p>
+            <div class="links">
+                <a href="https://fujisan.ne.jp/" target="_blank" class="btn btn-info">🌐 Website</a>
+                <a href="https://maps.google.com/?q=Lake+Kawaguchiko" target="_blank" class="btn btn-map">📍 Open Google Maps App</a>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3248.337093375881!2d138.7516905!3d35.5162464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6019661413a17e0b%3A0x2db4ba12dbbf1ee1!2sLake%20Kawaguchiko!5e0!3m2!1sen!2s!4v1600000000000" loading="lazy"></iframe>
             </div>
         </div>
     </div>
 </div>
+
+<!-- TAB SWITCHING JAVASCRIPT -->
+<script>
+    function openTab(evt, tabName) {
+        // Hide all tab content
+        const tabPanels = document.getElementsByClassName("tab-panel");
+        for (let i = 0; i < tabPanels.length; i++) {
+            tabPanels[i].classList.remove("active");
+        }
+
+        // Remove "active" class from all tab buttons
+        const tabBtns = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < tabBtns.length; i++) {
+            tabBtns[i].classList.remove("active");
+        }
+
+        // Show the current tab and set button to active
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
 
 </body>
 </html>
