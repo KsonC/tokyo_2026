@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Travel Guide & Itinerary</title>
+    <style>
+        :root {
+            --primary-color: #0969da;
+            --bg-color: #f6f8fa;
+            --card-bg: #ffffff;
+            --text-color: #24292f;
+            --border-color: #d0d7de;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        h1 { margin: 0 0 10px 0; color: var(--primary-color); }
+        .dates { font-weight: bold; color: #57606a; }
+
+        .day-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .day-title {
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .activity {
+            margin-bottom: 20px;
+        }
+
+        .activity-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .links {
+            margin: 8px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.85em;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .btn-info {
+            background-color: #f3f4f6;
+            color: #24292f;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-map {
+            background-color: #2da44e;
+            color: white;
+        }
+
+        .map-container {
+            position: relative;
+            padding-bottom: 45%; /* Aspect ratio for embedded map */
+            height: 0;
+            overflow: hidden;
+            border-radius: 6px;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>✈️ Travel Guide: Tokyo & Near Suburbs</h1>
+        <p class="dates">🗓 Dates: Nov 10 - Nov 15</p>
+        <p>Personal reference dashboard with maps, links, and detailed itinerary.</p>
+    </header>
+
+    <!-- DAY 1 -->
+    <div class="day-card">
+        <h2 class="day-title">Day 1: Arrival & City Views</h2>
+        
+        <div class="activity">
+            <div class="activity-title">1. Shibuya Sky</div>
+            <p>Observation deck offering 360-degree views of Tokyo and Shibuya Crossing.</p>
+            <div class="links">
+                <a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" class="btn btn-info">🌐 Official Website</a>
+                <a href="https://maps.google.com/?q=Shibuya+Sky" target="_blank" class="btn btn-map">📍 Open in Google Maps App</a>
+            </div>
+            <!-- Embedded Google Map -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747230491039!2d139.7001!3d35.6580!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b58c8a14b51%3A0x628004f1efb4334f!2sSHIBUYA%20SKY!5e0!3m2!1sen!2s!4v1600000000000" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-card">
+        <h2 class="day-title">Day 2: Cultural Exploration</h2>
+        
+        <div class="activity">
+            <div class="activity-title">1. Senso-ji Temple</div>
+            <p>Tokyo's oldest Buddhist temple located in Asakusa.</p>
+            <div class="links">
+                <a href="https://www.senso-ji.jp/english/" target="_blank" class="btn btn-info">🌐 Official Website</a>
+                <a href="https://maps.google.com/?q=Senso-ji+Temple" target="_blank" class="btn btn-map">📍 Open in Google Maps App</a>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.9922285743455!2d139.7944183!3d35.7147651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ec1a4463df1%3A0x6c08e8d44e7d0967!2sSens%C5%8D-ji!5e0!3m2!1sen!2s!4v1600000000000" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
